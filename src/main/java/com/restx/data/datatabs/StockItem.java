@@ -1,6 +1,7 @@
 package com.restx.data.datatabs;
 
 import com.restx.data.codestabs.QuantificationUnit;
+import com.restx.data.codestabs.StockItemType;
 
 import javax.persistence.*;
 import java.util.Date;

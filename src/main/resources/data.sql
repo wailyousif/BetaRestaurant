@@ -110,3 +110,28 @@ INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_
 INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('مشروب', 'مشروب', 1, 5);
 INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('معجنات', 'معجنات', 1, 6);
 INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('أخرى', 'أخرى', 1, 7);
+
+INSERT INTO public.special_order_type (id, code, user_defined) VALUES (nextval('special_order_type_seq'), 'OPEN-BUFFET', false);
+INSERT INTO public.special_order_type (id, code, user_defined) VALUES (nextval('special_order_type_seq'), 'JUNKET', false);
+INSERT INTO public.special_order_type (id, code, user_defined) VALUES (nextval('special_order_type_seq'), 'WEDDING', false);
+
+INSERT INTO public.special_order_type_trans (lang_code, lang_description, language_id, special_order_type_id) VALUES ('بوفيه مفتوح', 'بوفيه مفتوح', 1, 1);
+INSERT INTO public.special_order_type_trans (lang_code, lang_description, language_id, special_order_type_id) VALUES ('وليمة', 'وليمة', 1, 2);
+INSERT INTO public.special_order_type_trans (lang_code, lang_description, language_id, special_order_type_id) VALUES ('مناسبة زواج', 'مناسبة زواج', 1, 3);
+
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'MEATS', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'VEGGIES', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'FRUITS', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'PASTRIES', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'CONDIMENTS', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'DRINKS', false);
+INSERT INTO public.stock_item_type (id, code, user_defined) VALUES (nextval('stock_item_type_seq'), 'OTHERS', false);
+
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('لحوم', 'لحوم', 1, 1);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('خضروات', 'خضروات', 1, 2);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('فواكه', 'فواكه', 1, 3);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('معجنات', 'معجنات', 1, 4);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('توابل', 'توابل', 1, 5);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('مشروبات', 'مشروبات', 1, 6);
+INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('أخرى', 'أخرى', 1, 7);
+
