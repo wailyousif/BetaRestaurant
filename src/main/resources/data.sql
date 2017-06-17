@@ -14,78 +14,99 @@ INSERT INTO app_user (id, creation_time, display_name, enabled, password, userna
 INSERT INTO public.system_language (id, language) VALUES (1, 'Arabic');
 INSERT INTO public.system_language (id, language) VALUES (2, 'English');
 
-INSERT INTO public.cost_category (code, user_defined) VALUES ('GOVERNMENTAL', false);
-INSERT INTO public.cost_category (code, user_defined) VALUES ('PAYROLL', false);
-INSERT INTO public.cost_category (code, user_defined) VALUES ('RENTAL', false);
-INSERT INTO public.cost_category (code, user_defined) VALUES ('UTILITIES', false);
-INSERT INTO public.cost_category (code, user_defined) VALUES ('OTHERS', false);
+INSERT INTO public.cost_category (id, code, user_defined) VALUES (nextval('cost_category_seq'), 'GOVERNMENTAL', false);
+INSERT INTO public.cost_category (id, code, user_defined) VALUES (nextval('cost_category_seq'), 'PAYROLL', false);
+INSERT INTO public.cost_category (id, code, user_defined) VALUES (nextval('cost_category_seq'), 'RENTAL', false);
+INSERT INTO public.cost_category (id, code, user_defined) VALUES (nextval('cost_category_seq'), 'UTILITIES', false);
+INSERT INTO public.cost_category (id, code, user_defined) VALUES (nextval('cost_category_seq'), 'OTHERS', false);
 
-INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_code, language_id) VALUES ('رسوم حكومية', 'عوائد، ضرائب، الخ.', 'GOVERNMENTAL', 1);
-INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_code, language_id) VALUES ('موظفين', 'مرتبات، بدلات، حوافز للموظفين', 'PAYROLL', 1);
-INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_code, language_id) VALUES ('ايجارات', 'ايجار محل أو مخزن', 'RENTAL', 1);
-INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_code, language_id) VALUES ('خدمات', 'كهرباء، ماء، غاز، الخ.', 'UTILITIES', 1);
-INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_code, language_id) VALUES ('منصرفات أخرى', 'منصرفات أخرى', 'OTHERS', 1);
+INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_id, language_id) VALUES ('رسوم حكومية', 'عوائد، ضرائب، الخ.', 1, 1);
+INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_id, language_id) VALUES ('موظفين', 'مرتبات، بدلات، حوافز للموظفين', 2, 1);
+INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_id, language_id) VALUES ('ايجارات', 'ايجار محل أو مخزن', 3, 1);
+INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_id, language_id) VALUES ('خدمات', 'كهرباء، ماء، غاز، الخ.', 4, 1);
+INSERT INTO public.cost_category_trans (lang_code, lang_description, cost_category_id, language_id) VALUES ('منصرفات أخرى', 'منصرفات أخرى', 5, 1);
 
-INSERT INTO public.job_type (code, user_defined) VALUES ('COOK', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('WAITER', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('CASHIER', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('ACCOUNTANT', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('SUPERVISOR', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('CLEANER', false);
-INSERT INTO public.job_type (code, user_defined) VALUES ('OTHERS', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'COOK', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'WAITER', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'CASHIER', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'ACCOUNTANT', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'SUPERVISOR', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'CLEANER', false);
+INSERT INTO public.job_type (id, code, user_defined) VALUES (nextval('job_type_seq'), 'OTHERS', false);
 
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('طباخ', 'طباخ', 'COOK', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('جرسون', 'جرسون', 'WAITER', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('كاشير', 'كاشير', 'CASHIER', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('محاسب', 'محاسب', 'ACCOUNTANT', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('مشرف', 'مشرف', 'SUPERVISOR', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('عامل نظافة', 'عامل نظافة', 'CLEANER', 1);
-INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_code, language_id) VALUES ('أخرى', 'أخرى', 'OTHERS', 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('طباخ', 'طباخ', 1, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('جرسون', 'جرسون', 2, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('كاشير', 'كاشير', 3, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('محاسب', 'محاسب', 4, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('مشرف', 'مشرف', 5, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('عامل نظافة', 'عامل نظافة', 6, 1);
+INSERT INTO public.job_type_trans (lang_code, lang_description, job_type_id, language_id) VALUES ('أخرى', 'أخرى', 7, 1);
 
-INSERT INTO public.salary_frequency (code, user_defined) VALUES ('DAILY', false);
-INSERT INTO public.salary_frequency (code, user_defined) VALUES ('WEEKLY', false);
-INSERT INTO public.salary_frequency (code, user_defined) VALUES ('MONTHLY', false);
+INSERT INTO public.salary_frequency (id, code, user_defined) VALUES (nextval('salary_frequency_seq'), 'DAILY', false);
+INSERT INTO public.salary_frequency (id, code, user_defined) VALUES (nextval('salary_frequency_seq'), 'WEEKLY', false);
+INSERT INTO public.salary_frequency (id, code, user_defined) VALUES (nextval('salary_frequency_seq'), 'BI-WEEKLY', false);
+INSERT INTO public.salary_frequency (id, code, user_defined) VALUES (nextval('salary_frequency_seq'), 'MONTHLY', false);
 
-INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_code) VALUES ('يومي', 'يومي', 1, 'DAILY');
-INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_code) VALUES ('أسبوعي', 'أسبوعي', 1, 'WEEKLY');
-INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_code) VALUES ('شهري', 'شهري', 1, 'MONTHLY');
+INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_id) VALUES ('يومي', 'يومي', 1, 1);
+INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_id) VALUES ('أسبوعي', 'أسبوعي', 1, 2);
+INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_id) VALUES ('كل أسبوعين', 'كل أسبوعين', 1, 3);
+INSERT INTO public.salary_frequency_trans (lang_code, lang_description, language_id, salary_frequency_id) VALUES ('شهري', 'شهري', 1, 4);
 
-INSERT INTO public.quantification_method (code, user_defined) VALUES ('GRAMS', false);
-INSERT INTO public.quantification_method (code, user_defined) VALUES ('KILOGRAMS', false);
-INSERT INTO public.quantification_method (code, user_defined) VALUES ('QUANTITY', false);
+INSERT INTO public.quantification_method (id, code, user_defined) VALUES (nextval('quantification_method_seq'), 'QUANTITY', false);
+INSERT INTO public.quantification_method (id, code, user_defined) VALUES (nextval('quantification_method_seq'), 'WEIGHT', false);
+INSERT INTO public.quantification_method (id, code, user_defined) VALUES (nextval('quantification_method_seq'), 'VOLUME', false);
 
-INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_code) VALUES ('جم', 'جرام', 1, 'GRAMS');
-INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_code) VALUES ('كجم', 'كيلو جرام', 1, 'KILOGRAMS');
-INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_code) VALUES ('حبة', 'حبة أو قطعة', 1, 'QUANTITY');
+INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_id) VALUES ('كمية', 'كمية معدودة', 1, 1);
+INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_id) VALUES ('وزن', 'وزن', 1, 2);
+INSERT INTO public.quantification_method_trans (lang_code, lang_description, language_id, quantification_method_id) VALUES ('حجم', 'لتر أو غيره', 1, 3);
 
-INSERT INTO public.recurrence (code, user_defined) VALUES ('AD-HOC', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('DAILY', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('WEEKLY', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('MONTHLY', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('QUARTERLY', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('BI-ANNUAL', false);
-INSERT INTO public.recurrence (code, user_defined) VALUES ('ANNUAL', false);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'QTY', false, 1);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'GRAM', false, 2);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'KILOGRAM', false, 2);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'POUND', false, 2);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'OUNCE', false, 2);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'MILLI-LITER', false, 3);
+INSERT INTO public.quantification_unit (id, code, user_defined, quantification_method_id) VALUES (nextval('quantification_unit_seq'), 'LITER', false, 3);
 
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('لحظي', 'لحظي', 1, 'AD-HOC');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('يومي', 'يومي', 1, 'DAILY');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('أسبوعي', 'أسبوعي', 1, 'WEEKLY');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('شهري', 'شهري', 1, 'MONTHLY');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('ربع سنوي', 'ربع سنوي', 1, 'QUARTERLY');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('نصف سنوي', 'نصف سنوي', 1, 'BI-ANNUAL');
-INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_code) VALUES ('سنوي', 'سنوي', 1, 'ANNUAL');
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('حبة', 'حبة', 1, 1);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('جم', 'جم', 1, 2);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('كجم', 'كجم', 1, 3);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('رطل', 'رطل', 1, 4);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('أوقية', 'أوقية', 1, 5);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('ميللتر', 'ميللتر', 1, 6);
+INSERT INTO public.quantification_unit_trans (lang_code, lang_description, language_id, quantification_unit_id) VALUES ('لتر', 'لتر', 1, 7);
 
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('SANDWISH', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('APPETIZER', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('DISH', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('DESERT', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('DRINK', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('PASTRY', false);
-INSERT INTO public.sales_item_type (code, user_defined) VALUES ('OTHER', false);
 
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('سندوتش', 'سندوتش', 1, 'SANDWISH');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('طبق', 'طبق', 1, 'DISH');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('معجنات', 'معجنات', 1, 'PASTRY');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('تحلية', 'تحلية', 1, 'DESERT');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('مشروب', 'مشروب', 1, 'DRINK');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('مقبلات', 'مقبلات', 1, 'APPETIZER');
-INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_code) VALUES ('أخرى', 'أخرى', 1, 'OTHER');
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'AD-HOC', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'DAILY', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'WEEKLY', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'BI-WEEKLY', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'MONTHLY', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'QUARTERLY', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'BI-ANNUAL', false);
+INSERT INTO public.recurrence (id, code, user_defined) VALUES (nextval('recurrence_seq'), 'ANNUAL', false);
+
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('لحظي', 'لحظي', 1, 1);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('يومي', 'يومي', 1, 2);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('أسبوعي', 'أسبوعي', 1, 3);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('كل أسبوعين', 'كل أسبوعين', 1, 4);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('شهري', 'شهري', 1, 5);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('ربع سنوي', 'ربع سنوي', 1, 6);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('نصف سنوي', 'نصف سنوي', 1, 7);
+INSERT INTO public.recurrence_trans (lang_code, lang_description, language_id, recurrence_id) VALUES ('سنوي', 'سنوي', 1, 8);
+
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'SANDWISH', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'APPETIZER', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'DISH', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'DESERT', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'DRINK', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'PASTRY', false);
+INSERT INTO public.sales_item_type (id, code, user_defined) VALUES (nextval('sales_item_type_seq'), 'OTHER', false);
+
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('سندوتش', 'سندوتش', 1, 1);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('مقبلات', 'مقبلات', 1, 2);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('طبق', 'طبق', 1, 3);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('تحلية', 'تحلية', 1, 4);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('مشروب', 'مشروب', 1, 5);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('معجنات', 'معجنات', 1, 6);
+INSERT INTO public.sales_item_type_trans (lang_code, lang_description, language_id, sales_item_type_id) VALUES ('أخرى', 'أخرى', 1, 7);

@@ -1,5 +1,7 @@
 package com.restx.data.datatabs;
 
+import com.restx.data.codestabs.SpecialOrderType;
+
 import javax.persistence.*;
 import java.util.Date;
 

@@ -10,6 +10,11 @@ import javax.persistence.*;
 public class JobType
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "job_type_seq")
+    @SequenceGenerator(name="job_type_seq", sequenceName = "job_type_seq", allocationSize = 1, initialValue = 1)
+    private long id;
+
+    @Column(unique = true)
     private String code;     //Cook, Waiter, Cashier, Accountant, Supervisor, Others
 
     private boolean userDefined;
@@ -19,6 +24,14 @@ public class JobType
     public JobType(String code, boolean userDefined) {
         this.code = code;
         this.userDefined = userDefined;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCode() {

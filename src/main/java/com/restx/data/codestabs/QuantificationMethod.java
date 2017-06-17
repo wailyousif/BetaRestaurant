@@ -10,7 +10,12 @@ import javax.persistence.*;
 public class QuantificationMethod
 {
     @Id
-    private String code;     //items, grams, Kg
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quantification_method_seq")
+    @SequenceGenerator(name="quantification_method_seq", sequenceName = "quantification_method_seq", allocationSize = 1, initialValue = 1)
+    private long id;
+
+    @Column(unique = true)
+    private String code;     //Qty, Weight, Volume
 
     private boolean userDefined;
 
@@ -19,6 +24,14 @@ public class QuantificationMethod
     public QuantificationMethod(String code, boolean userDefined) {
         this.code = code;
         this.userDefined = userDefined;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCode() {

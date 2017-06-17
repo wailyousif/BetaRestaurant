@@ -1,6 +1,6 @@
 package com.restx.data.datatabs;
 
-import com.restx.data.codestabs.QuantificationMethod;
+import com.restx.data.codestabs.QuantificationUnit;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,7 +29,7 @@ public class StockItem
     private double unitPrice;
 
     @ManyToOne
-    private QuantificationMethod quantificationMethod;  //Quantity / Weight (Gram/KG)
+    private QuantificationUnit quantificationUnit;  //Quantity / Weight (Gram/KG)
 
     private Date creationTime;
 
