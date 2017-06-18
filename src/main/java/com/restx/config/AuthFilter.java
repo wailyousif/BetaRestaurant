@@ -67,7 +67,7 @@ public class AuthFilter implements Filter
         String userIdentifier = "remoteUser(" + remoteUser + ") " + "remoteAddr(" + remoteAddr + ") remoteHost(" + remoteHost + ")";
         logger.info("Access to URI(" + requestURI + ") by " + userIdentifier);
 
-        if (requestURI.equals("/mvc/user/login"))
+        if (requestURI.equals("/mvc/method/user/login"))
         {
             chain.doFilter(req, resp);
         }

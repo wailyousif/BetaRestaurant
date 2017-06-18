@@ -52,10 +52,8 @@
 <div class="row" style="margin-top: 50px; position: relative; overflow: auto;">
     <div class="col-xs-4"></div>
     <div class="col-xs-4">
-        <h2>Owner Page</h2>
+        <h2>Add Stock Item</h2>
         <hr />
-
-        <a href="/mvc/page/stock/itemadd">Add Stock Item</a>
 
     </div>
     <div class="col-xs-4"></div>

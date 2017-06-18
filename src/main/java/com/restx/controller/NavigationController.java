@@ -20,6 +20,8 @@ public class NavigationController
     private static final String loginPage = "/pages/open/login";
     private static final String licenseTermsPage = "/pages/open/license.jsp";
 
+    private static final String stockItemAddPage = "/pages/secure/stockadd";
+
     @RequestMapping(value = "/{restBranch}", method = RequestMethod.GET)
     public String root(HttpServletRequest request, Model model, @PathVariable String restBranch)
     {
@@ -32,6 +34,12 @@ public class NavigationController
     {
         response.getWriter().write("Invalid URL");
         response.getWriter().flush();
+    }
+
+    @RequestMapping(value = "/mvc/page/stock/itemadd", method = RequestMethod.GET)
+    public String showStockItemAddPage()
+    {
+        return stockItemAddPage;
     }
 
     @RequestMapping(value = "/mvc/license/terms", method = RequestMethod.GET)

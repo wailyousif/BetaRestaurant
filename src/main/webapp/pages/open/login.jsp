@@ -98,7 +98,7 @@
                                 cache: false,
                                 type: "POST",
                                 contentType: false,
-                                url: "/mvc/user/login",
+                                url: "/mvc/method/user/login",
                                 headers: { 'x-tenantid': restbranch },
                                 data: objFormData,
                                 processData: false,

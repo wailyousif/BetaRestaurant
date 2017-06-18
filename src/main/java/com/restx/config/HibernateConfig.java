@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by wailm.yousif on 6/15/17.
  */
 
-//@Configuration
+@Configuration
 public class HibernateConfig {
 
     @Autowired

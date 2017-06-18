@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-@RequestMapping(path = "/mvc/user")
+@RequestMapping(path = "/mvc/method/user")
 public class MvcUserController
 {
     final static Logger logger = Logger.getLogger(MvcUserController.class);
