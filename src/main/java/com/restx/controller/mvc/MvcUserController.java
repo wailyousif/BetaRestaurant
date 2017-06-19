@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(path = "/mvc/method/user")
 public class MvcUserController
 {
-    final static Logger logger = Logger.getLogger(MvcUserController.class);
+    private final static Logger logger = Logger.getLogger(MvcUserController.class);
 
     private static final String logoutPage = "/pages/open/logout";
     private static final String securePath = "/pages/secure/";

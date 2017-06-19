@@ -18,6 +18,7 @@ public class Supplier
     @ManyToOne
     private RestaurantBranch restaurantBranch;
 
+    @Column(unique = true)
     private String name;
 
     private Date creationTime;

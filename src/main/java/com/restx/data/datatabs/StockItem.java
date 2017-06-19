@@ -21,6 +21,7 @@ public class StockItem
     @ManyToOne
     private RestaurantBranch restaurantBranch;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToOne
