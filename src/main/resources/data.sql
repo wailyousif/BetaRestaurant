@@ -135,6 +135,16 @@ INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_
 INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('مشروبات', 'مشروبات', 1, 6);
 INSERT INTO public.stock_item_type_trans (lang_code, lang_description, language_id, stock_item_type_id) VALUES ('أخرى', 'أخرى', 1, 7);
 
+INSERT INTO public.stock_transaction_type (id, code, user_defined) VALUES (nextval('stock_transaction_type_seq'), 'ADD_TO_STOCK', false);
+INSERT INTO public.stock_transaction_type (id, code, user_defined) VALUES (nextval('stock_transaction_type_seq'), 'REMOVE_FROM_STOCK', false);
+INSERT INTO public.stock_transaction_type (id, code, user_defined) VALUES (nextval('stock_transaction_type_seq'), 'MOVE_FROM_STOCK_TO_KITCHEN', false);
+INSERT INTO public.stock_transaction_type (id, code, user_defined) VALUES (nextval('stock_transaction_type_seq'), 'MOVE_FROM_KITCHEN_TO_STOCK', false);
+
+INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('إضافة الى المخزن', 'إضافة الى المخزن', 1, 1);
+INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('حذف من المخزن', 'حذف من المخزن', 1, 2);
+INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('نقل من المخزن الى المطبخ', 'نقل من المخزن الى المطبخ', 1, 3);
+INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('نقل من المطبخ الى المخزن', 'نقل من المطبخ الى المخزن', 1, 4);
+
 --------------------------------
 
 INSERT INTO public.system_code_type (id, code_type, description) VALUES (nextval('system_code_type_seq'), 'COST_CATEGORY',  'COST_CATEGORY');
