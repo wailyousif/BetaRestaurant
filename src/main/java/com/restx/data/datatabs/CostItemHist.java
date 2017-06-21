@@ -10,11 +10,11 @@ import java.util.Date;
  */
 
 @Entity
-public class CostItem
+public class CostItemHist
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_item_seq")
-    @SequenceGenerator(name="cost_item_seq", sequenceName = "cost_item_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_item_hist_seq")
+    @SequenceGenerator(name="cost_item_hist_seq", sequenceName = "cost_item_hist_seq", allocationSize = 1, initialValue = 1)
     private long id;
 
     @ManyToOne
@@ -23,16 +23,6 @@ public class CostItem
     private String name;
     private String description;
 
-    /*
-        @JoinColumns({
-            @JoinColumn(
-                    name = "cost_category",
-                    referencedColumnName = "cost_category"),
-            @JoinColumn(
-                    name = "language_id",
-                    referencedColumnName = "language_id")
-    })
-     */
     @ManyToOne
     private CostCategory costCategory;  //Governmental, Employees Benefits, Rental, Utilities, Others
 
@@ -42,9 +32,14 @@ public class CostItem
     @ManyToOne
     private AppUser appUser;
 
-    public CostItem() { }
+    private String actionType;
 
-    public CostItem(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser appUser) {
+    @ManyToOne
+    private AppUser actionBy;
+
+    public CostItemHist() { }
+
+    public CostItemHist(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser appUser, String actionType, AppUser actionBy) {
         this.restaurantBranch = restaurantBranch;
         this.name = name;
         this.description = description;
@@ -52,6 +47,8 @@ public class CostItem
         this.enabled = enabled;
         this.creationTime = creationTime;
         this.appUser = appUser;
+        this.actionType = actionType;
+        this.actionBy = actionBy;
     }
 
     public long getId() {
@@ -116,5 +113,21 @@ public class CostItem
 
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public AppUser getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(AppUser actionBy) {
+        this.actionBy = actionBy;
     }
 }

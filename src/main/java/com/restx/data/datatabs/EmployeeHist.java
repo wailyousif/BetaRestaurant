@@ -11,11 +11,11 @@ import java.util.Date;
  */
 
 @Entity
-public class Employee
+public class EmployeeHist
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
-    @SequenceGenerator(name="employee_seq", sequenceName = "employee_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_hist_seq")
+    @SequenceGenerator(name="employee_hist_seq", sequenceName = "employee_hist_seq", allocationSize = 1, initialValue = 1)
     private long id;
 
     @ManyToOne
@@ -42,9 +42,14 @@ public class Employee
     @ManyToOne
     private AppUser appUser;
 
-    public Employee() { }
+    private String actionType;
 
-    public Employee(RestaurantBranch restaurantBranch, String personalId, String name, String gender, String jobTitle, JobType jobType, String jobDescription, SalaryFrequency salaryFrequency, double salary, Date startDate, Date creationTime, AppUser appUser) {
+    @ManyToOne
+    private AppUser actionBy;
+
+    public EmployeeHist() { }
+
+    public EmployeeHist(RestaurantBranch restaurantBranch, String personalId, String name, String gender, String jobTitle, JobType jobType, String jobDescription, SalaryFrequency salaryFrequency, double salary, Date startDate, Date creationTime, AppUser appUser, String actionType, AppUser actionBy) {
         this.restaurantBranch = restaurantBranch;
         this.personalId = personalId;
         this.name = name;
@@ -57,6 +62,8 @@ public class Employee
         this.startDate = startDate;
         this.creationTime = creationTime;
         this.appUser = appUser;
+        this.actionType = actionType;
+        this.actionBy = actionBy;
     }
 
     public long getId() {
@@ -161,5 +168,21 @@ public class Employee
 
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public AppUser getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(AppUser actionBy) {
+        this.actionBy = actionBy;
     }
 }

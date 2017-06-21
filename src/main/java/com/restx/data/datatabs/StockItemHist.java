@@ -11,11 +11,11 @@ import java.util.Date;
  */
 
 @Entity
-public class StockItem
+public class StockItemHist
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stock_item_seq")
-    @SequenceGenerator(name="stock_item_seq", sequenceName = "stock_item_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stock_item_hist_seq")
+    @SequenceGenerator(name="stock_item_hist_seq", sequenceName = "stock_item_hist_seq", allocationSize = 1, initialValue = 1)
     private long id;
 
     @ManyToOne
@@ -39,9 +39,14 @@ public class StockItem
     @ManyToOne
     private AppUser appUser;
 
-    public StockItem() { }
+    private String actionType;
 
-    public StockItem(RestaurantBranch restaurantBranch, String name, StockItemType stockItemType, String description, double unitPrice, QuantificationUnit quantificationUnit, boolean enabled, Date creationTime, AppUser appUser) {
+    @ManyToOne
+    private AppUser actionBy;
+
+    public StockItemHist() { }
+
+    public StockItemHist(RestaurantBranch restaurantBranch, String name, StockItemType stockItemType, String description, double unitPrice, QuantificationUnit quantificationUnit, boolean enabled, Date creationTime, AppUser appUser, String actionType, AppUser actionBy) {
         this.restaurantBranch = restaurantBranch;
         this.name = name;
         this.stockItemType = stockItemType;
@@ -51,6 +56,8 @@ public class StockItem
         this.enabled = enabled;
         this.creationTime = creationTime;
         this.appUser = appUser;
+        this.actionType = actionType;
+        this.actionBy = actionBy;
     }
 
     public long getId() {
@@ -131,5 +138,21 @@ public class StockItem
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public AppUser getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(AppUser actionBy) {
+        this.actionBy = actionBy;
     }
 }

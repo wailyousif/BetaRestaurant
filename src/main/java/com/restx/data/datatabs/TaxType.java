@@ -21,9 +21,6 @@ public class TaxType
     private String taxType;
     private String description;
 
-    private Date fromDate;
-    private Date toDate;
-
     private Date creationTime;
 
     @ManyToOne

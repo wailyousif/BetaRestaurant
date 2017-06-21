@@ -5,10 +5,7 @@ import com.restx.data.datatabs.AppUser;
 import com.restx.data.datatabs.StockItem;
 import com.restx.data.datatabs.StockItemsTransactions;
 import com.restx.data.datatabs.Supplier;
-import com.restx.data.repo.StockItemRepo;
 import com.restx.data.repo.StockItemsTransactionsRepo;
-import com.restx.data.repo.StockTransactionTypeRepo;
-import com.restx.data.repo.SupplierRepo;
 import com.restx.dto.ResponseObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,22 +31,12 @@ public class MvcStockController
     @Autowired
     private StockItemsTransactionsRepo stockItemsTransactionsRepo;
 
-    @Autowired
-    private StockItemRepo stockItemRepo;
-
-    @Autowired
-    private StockTransactionTypeRepo stockTransactionTypeRepo;
-
-    @Autowired
-    private SupplierRepo supplierRepo;
-
-
     @RequestMapping(path = "/itemadd", method = RequestMethod.POST)
     public ResponseEntity<ResponseObject> itemAdd(
             HttpServletRequest request,
-            String stockItemName,
-            String transactionType,
-            String supplierName,
+            Long stockItemId,
+            Long transactionTypeId,
+            Long supplierId,
             Double qw,
             Double unitPrice,
             Double transportationCharges,
@@ -65,9 +52,21 @@ public class MvcStockController
         try
         {
             AppUser appUser = (AppUser)request.getSession().getAttribute("appUser");
+
+            /*
             StockItem stockItem = stockItemRepo.findByName(stockItemName);
             StockTransactionType stockTransactionType = stockTransactionTypeRepo.findByCode(transactionType);
             Supplier supplier = supplierRepo.findByName(supplierName);
+            */
+
+            StockItem stockItem = new StockItem();
+            stockItem.setId(stockItemId);
+
+            StockTransactionType stockTransactionType = new StockTransactionType();
+            stockTransactionType.setId(transactionTypeId);
+
+            Supplier supplier = new Supplier();
+            supplier.setId(supplierId);
 
             StockItemsTransactions stockItemsTransactions =
                     new StockItemsTransactions(appUser.getRestaurantBranch(), stockItem,

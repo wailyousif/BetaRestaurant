@@ -1,6 +1,6 @@
 package com.restx.data.datatabs;
 
-import com.restx.data.codestabs.CostCategory;
+import com.restx.data.codestabs.SalesItemType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,48 +10,46 @@ import java.util.Date;
  */
 
 @Entity
-public class CostItem
+public class SalesItemHist
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_item_seq")
-    @SequenceGenerator(name="cost_item_seq", sequenceName = "cost_item_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sales_item_hist_seq")
+    @SequenceGenerator(name="sales_item_hist_seq", sequenceName = "sales_item_hist_seq", allocationSize = 1, initialValue = 1)
     private long id;
 
     @ManyToOne
     private RestaurantBranch restaurantBranch;
 
     private String name;
-    private String description;
 
-    /*
-        @JoinColumns({
-            @JoinColumn(
-                    name = "cost_category",
-                    referencedColumnName = "cost_category"),
-            @JoinColumn(
-                    name = "language_id",
-                    referencedColumnName = "language_id")
-    })
-     */
     @ManyToOne
-    private CostCategory costCategory;  //Governmental, Employees Benefits, Rental, Utilities, Others
+    private SalesItemType salesItemType;    //Sandwich, Appetizer, Dish, Desert, Drink, etc.
 
+    private String description;
     private boolean enabled;
+
     private Date creationTime;
 
     @ManyToOne
     private AppUser appUser;
 
-    public CostItem() { }
+    private String actionType;
 
-    public CostItem(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser appUser) {
+    @ManyToOne
+    private AppUser actionBy;
+
+    public SalesItemHist() { }
+
+    public SalesItemHist(RestaurantBranch restaurantBranch, String name, SalesItemType salesItemType, String description, boolean enabled, Date creationTime, AppUser appUser, String actionType, AppUser actionBy) {
         this.restaurantBranch = restaurantBranch;
         this.name = name;
+        this.salesItemType = salesItemType;
         this.description = description;
-        this.costCategory = costCategory;
         this.enabled = enabled;
         this.creationTime = creationTime;
         this.appUser = appUser;
+        this.actionType = actionType;
+        this.actionBy = actionBy;
     }
 
     public long getId() {
@@ -78,20 +76,20 @@ public class CostItem
         this.name = name;
     }
 
+    public SalesItemType getSalesItemType() {
+        return salesItemType;
+    }
+
+    public void setSalesItemType(SalesItemType salesItemType) {
+        this.salesItemType = salesItemType;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public CostCategory getCostCategory() {
-        return costCategory;
-    }
-
-    public void setCostCategory(CostCategory costCategory) {
-        this.costCategory = costCategory;
     }
 
     public boolean isEnabled() {
@@ -116,5 +114,21 @@ public class CostItem
 
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public AppUser getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(AppUser actionBy) {
+        this.actionBy = actionBy;
     }
 }

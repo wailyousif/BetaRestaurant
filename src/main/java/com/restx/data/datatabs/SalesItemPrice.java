@@ -25,6 +25,9 @@ public class SalesItemPrice
     private Date toDate;
     private double unitPrice;
 
+    @ManyToOne
+    private TaxType taxType;
+
     private Date creationTime;
 
     @ManyToOne

@@ -1,7 +1,11 @@
 package com.restx;
 
+import com.restx.data.codestabs.StockTransactionType;
+import com.restx.data.datatabs.TestCls;
+import com.restx.data.repo.TestClsRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,10 +23,16 @@ public class SpringJpaWebApplicationTests {
 	@Test
 	public void contextLoads() { }
 
+	@Autowired
+	private TestClsRepo testClsRepo;
+
 	@Test
 	public void walkThroughTest()
 	{
-
+		StockTransactionType stockTransactionType = new StockTransactionType();
+		stockTransactionType.setId(1);
+		TestCls testCls = new TestCls(stockTransactionType, "Test One");
+		testClsRepo.save(testCls);
 	}
 
 
