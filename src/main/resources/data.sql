@@ -1,15 +1,4 @@
-INSERT INTO address (id, address_line1, address_line2, city, country, lat, lng, state, street, zip_code) VALUES (-1, 'Debonairs Tower', null, 'Khartoum', 'Sudan', 0, 0, 'KRT', 'Airport St.', '33411');
-INSERT INTO contact_info (id, email, phone, address_id) VALUES (-1, 'wail@hotmail.com', '+249901239310', -1);
-
-INSERT INTO restaurant_owner (id, name, contact_info_id) VALUES (-1, 'Wail Mohamed', -1);
-INSERT INTO restaurant (id, arabic_name, english_name, logo_file, hq_address_id, owner_id) VALUES (-1, 'ديبونيرز', 'Debonairs', 'debonairs.jpg', -1, -1);
-INSERT INTO restaurant_branch (id, arabic_name, english_name, address_id, branch_manager_id, restaurant_id) VALUES (-1, 'فرع الستين', '60 Branch', -1, null, -1);
-
-INSERT INTO user_role (id, default_page, description, role) VALUES (-1, 'owner.jsp', 'Owner-Page', 'OWNER');
-INSERT INTO user_role (id, default_page, description, role) VALUES (-2, 'cashier.jsp', 'Cashier Page', 'CASHIER');
-INSERT INTO user_role (id, default_page, description, role) VALUES (-3, 'stock.jsp', 'Stock Management Page', 'STOCK_MANAGER');
-
-INSERT INTO app_user (id, creation_time, display_name, enabled, password, username, created_by_id, employee_id, restaurant_branch_id, user_role_id) VALUES (-1, '2017-06-10 18:50:36.777000', 'Wail MY', true, 'We+sNJEng9p6ykLezqhim84+RPwL37aEAuaDt6qE9gL7cl7ff+gawahkn+AMYNZ90zC49cakVy86sY4YZuexxw==', 'wail', null, null, -1, -1);
+---------------------Default Data---------------------
 
 INSERT INTO public.system_language (id, language) VALUES (1, 'Arabic');
 INSERT INTO public.system_language (id, language) VALUES (2, 'English');
@@ -145,40 +134,19 @@ INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, la
 INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('نقل من المخزن الى المطبخ', 'نقل من المخزن الى المطبخ', 1, 3);
 INSERT INTO public.stock_transaction_type_trans (lang_code, lang_description, language_id, stock_transaction_type_id) VALUES ('نقل من المطبخ الى المخزن', 'نقل من المطبخ الى المخزن', 1, 4);
 
---------------------------------
+---------------------Sample Data---------------------
 
-INSERT INTO public.system_code_type (id, code_type, description) VALUES (nextval('system_code_type_seq'), 'COST_CATEGORY',  'COST_CATEGORY');
+INSERT INTO address (id, address_line1, address_line2, city, country, lat, lng, state, street, zip_code) VALUES (-1, 'Debonairs Tower', null, 'Khartoum', 'Sudan', 0, 0, 'KRT', 'Airport St.', '33411');
+INSERT INTO contact_info (id, email, phone, address_id) VALUES (-1, 'wail@hotmail.com', '+249901239310', -1);
 
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'GOVERNMENTAL', false, 1, 1);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'PAYROLL', false, 1, 2);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'RENTAL', false, 1, 3);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'UTILITIES', false, 1, 4);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'OTHER_COST_CATEGORIES', false, 1, 5);
+INSERT INTO restaurant_owner (id, name, contact_info_id) VALUES (-1, 'Wail Mohamed', -1);
+INSERT INTO restaurant (id, arabic_name, english_name, hq_address_id, owner_id) VALUES (-1, 'ديبونيرز', 'Debonairs', -1, -1);
+INSERT INTO restaurant_branch (id, arabic_name, english_name, address_id, branch_manager_id, restaurant_id) VALUES (-1, 'فرع الستين', '60 Branch', -1, null, -1);
 
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('رسوم حكومية', 'عوائد، ضرائب، الخ.', 1, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('موظفين', 'مرتبات، بدلات، حوافز للموظفين', 2, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('ايجارات', 'ايجار محل أو مخزن', 3, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('خدمات', 'كهرباء، ماء، غاز، الخ.', 4, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('منصرفات أخرى', 'منصرفات أخرى', 5, 1);
+INSERT INTO user_role (id, default_page, description, role) VALUES (-1, 'owner.jsp', 'Owner-Page', 'OWNER');
+INSERT INTO user_role (id, default_page, description, role) VALUES (-2, 'cashier.jsp', 'Cashier Page', 'CASHIER');
+INSERT INTO user_role (id, default_page, description, role) VALUES (-3, 'stock.jsp', 'Stock Management Page', 'STOCK_MANAGER');
 
-----
+INSERT INTO app_user (id, creation_time, display_name, enabled, password, username, created_by_id, employee_id, restaurant_branch_id, user_role_id) VALUES (-1, '2017-06-10 18:50:36.777000', 'Wail MY', true, 'We+sNJEng9p6ykLezqhim84+RPwL37aEAuaDt6qE9gL7cl7ff+gawahkn+AMYNZ90zC49cakVy86sY4YZuexxw==', 'wail', null, null, -1, -1);
 
-INSERT INTO public.system_code_type (id, code_type, description) VALUES (nextval('system_code_type_seq'), 'JOB_TYPE',  'JOB_TYPE');
-
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'COOK', false, 2, 1);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'WAITER', false, 2, 2);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'CASHIER', false, 2, 3);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'ACCOUNTANT', false, 2, 4);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'SUPERVISOR', false, 2, 5);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'CLEANER', false, 2, 6);
-INSERT INTO public.system_code (id, code, user_defined, system_code_type_id, list_order) VALUES (nextval('system_code_seq'), 'OTHER_JOB_TYPES', false, 2, 7);
-
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('طباخ', 'طباخ', 6, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('جرسون', 'جرسون', 7, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('كاشير', 'كاشير', 8, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('محاسب', 'محاسب', 9, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('مشرف', 'مشرف', 10, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('عامل نظافة', 'عامل نظافة', 11, 1);
-INSERT INTO public.system_code_trans (lang_code, lang_description, system_code_id, language_id) VALUES ('أخرى', 'أخرى', 12, 1);
-
-----
+INSERT INTO employee (id, creation_time, gender, job_description, job_title, name, personal_id, salary, start_date, app_user_id, job_type_id, restaurant_branch_id, salary_frequency_id) VALUES (-1, '2017-06-23 18:34:50.330000', 'M', 'Manager', 'Branch Manager', 'Wail', '1357', 100000, '2017-06-23 18:35:51.620000', -1, 5, -1, 4);

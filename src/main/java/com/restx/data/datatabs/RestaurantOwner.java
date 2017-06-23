@@ -16,7 +16,7 @@ public class RestaurantOwner
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private ContactInfo contactInfo;
 
     public RestaurantOwner() { }
