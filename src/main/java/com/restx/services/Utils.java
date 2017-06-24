@@ -12,7 +12,8 @@ public class Utils
 {
     public static final String TENANT_HEADER = "x-tenantid";
     public static final String emptyString = "";
-    public static DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+    public static DateFormat westernDf = new SimpleDateFormat("MM/dd/yyyy");
+    public static DateFormat arabianDf = new SimpleDateFormat("dd/MMM/yyyy");
 
     public static boolean isBrowser(HttpServletRequest request)
     {

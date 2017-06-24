@@ -113,8 +113,10 @@ public class MvcRestaurantController
             ownerAddress.setState(ownerState);
             ownerAddress.setCountry(ownerCountry);
             ownerAddress.setZipCode(ownerZipCode);
-            ownerAddress.setLat(ownerLat);
-            ownerAddress.setLng(ownerLng);
+            if (ownerLat != null)
+                ownerAddress.setLat(ownerLat);
+            if (ownerLng != null)
+                ownerAddress.setLng(ownerLng);
             ownerContact.setAddress(ownerAddress);
 
             ownerContact.setPhone(ownerPhone);
@@ -131,8 +133,10 @@ public class MvcRestaurantController
             hqAddress.setState(state);
             hqAddress.setCountry(country);
             hqAddress.setZipCode(zipCode);
-            hqAddress.setLat(lat);
-            hqAddress.setLng(lng);
+            if (lat != null)
+                hqAddress.setLat(lat);
+            if (lng != null)
+                hqAddress.setLng(lng);
             restaurant.setHqAddress(hqAddress);
 
             restaurant.setArabicName(arabicName);
@@ -209,8 +213,10 @@ public class MvcRestaurantController
             branchAddress.setState(state);
             branchAddress.setCountry(country);
             branchAddress.setZipCode(zipCode);
-            branchAddress.setLat(lat);
-            branchAddress.setLng(lng);
+            if (lat != null)
+                branchAddress.setLat(lat);
+            if (lng != null)
+                branchAddress.setLng(lng);
 
             Employee branchManager = new Employee();
             branchManager.setId(branchManagerEmployeeId);
