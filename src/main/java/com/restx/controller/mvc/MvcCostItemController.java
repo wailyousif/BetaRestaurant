@@ -2,11 +2,9 @@ package com.restx.controller.mvc;
 
 import com.restx.data.codestabs.CostCategory;
 import com.restx.data.codestabs.Recurrence;
-import com.restx.data.datatabs.AppUser;
-import com.restx.data.datatabs.CostItem;
-import com.restx.data.datatabs.CostItemCost;
-import com.restx.data.datatabs.RestaurantBranch;
+import com.restx.data.datatabs.*;
 import com.restx.data.repo.CostItemCostRepo;
+import com.restx.data.repo.CostItemHistRepo;
 import com.restx.data.repo.CostItemRepo;
 import com.restx.dto.ResponseObject;
 import com.restx.services.Utils;
@@ -36,6 +34,9 @@ public class MvcCostItemController
 
     @Autowired
     private CostItemCostRepo costItemCostRepo;
+
+    @Autowired
+    private CostItemHistRepo costItemHistRepo;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public ResponseEntity<ResponseObject> add(
@@ -81,7 +82,7 @@ public class MvcCostItemController
 
             responseObject.setSuccess(true);
             responseObject.setResponseCode(0);
-            responseObject.setResponseString("Branch information updated successfully.");
+            responseObject.setResponseString("Cost Item created successfully.");
             responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
         }
         catch (Exception ex)
@@ -97,6 +98,82 @@ public class MvcCostItemController
         }
 
         return responseEntity;
+    }
 
+
+
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    public ResponseEntity<ResponseObject> update(
+            HttpServletRequest request,
+            Long costItemId,
+            String name,
+            String description,
+            Long costCategoryId,
+            Boolean enabled
+    )
+    {
+        ResponseObject responseObject = new ResponseObject(false, -10,
+                "Failed to update the Cost Item. Contact system administrator.");
+        ResponseEntity<ResponseObject> responseEntity;
+
+        try
+        {
+            CostItem costItem = costItemRepo.findOne(costItemId);
+            CostItemHist costItemHist = new CostItemHist();
+            costItemHist.setCostItem(costItem);
+
+            if (!name.equals(costItem.getName()))
+            {
+                costItemHist.setName(costItem.getName());
+                costItem.setName(name);
+            }
+
+            if (!description.equals(costItem.getDescription()))
+            {
+                costItemHist.setDescription(costItem.getDescription());
+                costItem.setDescription(description);
+            }
+
+            CostCategory costCategory = new CostCategory();
+            if (costCategoryId != costItem.getCostCategory().getId())
+            {
+                costItemHist.setCostCategory(costItem.getCostCategory());
+                costCategory.setId(costCategoryId);
+                costItem.setCostCategory(costCategory);
+            }
+
+            if (enabled != costItem.isEnabled())
+            {
+                costItemHist.setEnabled(costItem.isEnabled());
+                costItem.setEnabled(enabled);
+            }
+
+            AppUser actionBy = (AppUser)request.getSession().getAttribute("appUser");
+
+            costItemHist.setActionType("U");
+            costItemHist.setActionTime(new Date());
+            costItemHist.setActionBy(actionBy);
+
+            costItemHistRepo.save(costItemHist);
+            costItemRepo.save(costItem);
+
+            responseObject.setSuccess(true);
+            responseObject.setResponseCode(0);
+            responseObject.setResponseString("Cost Item updated successfully.");
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            logger.error("Handled Exception", ex);
+            responseObject.setSuccess(false);
+            responseObject.setResponseCode(-1000);
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        finally
+        {
+
+        }
+
+        return responseEntity;
     }
 }

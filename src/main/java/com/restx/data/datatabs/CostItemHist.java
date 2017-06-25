@@ -18,7 +18,7 @@ public class CostItemHist
     private long id;
 
     @ManyToOne
-    private RestaurantBranch restaurantBranch;
+    private CostItem costItem;
 
     private String name;
     private String description;
@@ -27,27 +27,23 @@ public class CostItemHist
     private CostCategory costCategory;  //Governmental, Employees Benefits, Rental, Utilities, Others
 
     private boolean enabled;
-    private Date creationTime;
-
-    @ManyToOne
-    private AppUser appUser;
 
     private String actionType;
+    private Date actionTime;
 
     @ManyToOne
     private AppUser actionBy;
 
     public CostItemHist() { }
 
-    public CostItemHist(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser appUser, String actionType, AppUser actionBy) {
-        this.restaurantBranch = restaurantBranch;
+    public CostItemHist(CostItem costItem, String name, String description, CostCategory costCategory, boolean enabled, String actionType, Date actionTime, AppUser actionBy) {
+        this.costItem = costItem;
         this.name = name;
         this.description = description;
         this.costCategory = costCategory;
         this.enabled = enabled;
-        this.creationTime = creationTime;
-        this.appUser = appUser;
         this.actionType = actionType;
+        this.actionTime = actionTime;
         this.actionBy = actionBy;
     }
 
@@ -57,14 +53,6 @@ public class CostItemHist
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public RestaurantBranch getRestaurantBranch() {
-        return restaurantBranch;
-    }
-
-    public void setRestaurantBranch(RestaurantBranch restaurantBranch) {
-        this.restaurantBranch = restaurantBranch;
     }
 
     public String getName() {
@@ -99,22 +87,6 @@ public class CostItemHist
         this.enabled = enabled;
     }
 
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public AppUser getAppUser() {
-        return appUser;
-    }
-
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
-
     public String getActionType() {
         return actionType;
     }
@@ -129,5 +101,21 @@ public class CostItemHist
 
     public void setActionBy(AppUser actionBy) {
         this.actionBy = actionBy;
+    }
+
+    public CostItem getCostItem() {
+        return costItem;
+    }
+
+    public void setCostItem(CostItem costItem) {
+        this.costItem = costItem;
+    }
+
+    public Date getActionTime() {
+        return actionTime;
+    }
+
+    public void setActionTime(Date actionTime) {
+        this.actionTime = actionTime;
     }
 }

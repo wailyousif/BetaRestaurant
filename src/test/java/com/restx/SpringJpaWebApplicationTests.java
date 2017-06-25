@@ -4,9 +4,7 @@ import com.restx.data.codestabs.CostCategory;
 import com.restx.data.codestabs.Recurrence;
 import com.restx.data.codestabs.StockTransactionType;
 import com.restx.data.datatabs.*;
-import com.restx.data.repo.AppUserRepo;
-import com.restx.data.repo.CostItemCostRepo;
-import com.restx.data.repo.TestClsRepo;
+import com.restx.data.repo.*;
 import com.restx.dto.ResponseObject;
 import com.restx.services.Utils;
 import org.junit.Test;
@@ -34,7 +32,14 @@ public class SpringJpaWebApplicationTests {
 	private TestClsRepo testClsRepo;
 
 	@Autowired
+	private CostItemRepo costItemRepo;
+
+	@Autowired
 	private CostItemCostRepo costItemCostRepo;
+
+	@Autowired
+	private CostItemHistRepo costItemHistRepo;
+
 
 	@Autowired
 	private AppUserRepo appUserRepo;
@@ -56,7 +61,10 @@ public class SpringJpaWebApplicationTests {
 
 		int ret = add("غاز", "غاز الطبخ", 4L, true, "01/JUL/2017", "",
 				3L, 500.0);
-		System.out.println("ret=" + ret);
+		System.out.println("add=" + ret);
+
+		ret = update(1L, "غاز", "غاز الطبخ الجاهز", 4L, true);
+		System.out.println("update=" + ret);
 	}
 
 
@@ -118,7 +126,84 @@ public class SpringJpaWebApplicationTests {
 		{
 
 		}
+	}
 
+
+
+	public int update(
+			Long costItemId,
+			String name,
+			String description,
+			Long costCategoryId,
+			Boolean enabled
+	)
+	{
+		ResponseObject responseObject = new ResponseObject(false, -10,
+				"Failed to update the Cost Item. Contact system administrator.");
+		ResponseEntity<ResponseObject> responseEntity;
+
+		try
+		{
+			CostCategory costCategory = new CostCategory();
+
+			CostItemHist costItemHist = new CostItemHist();
+			CostItem costItem = costItemRepo.findOne(costItemId);
+			costItemHist.setCostItem(costItem);
+
+			if (!name.equals(costItem.getName()))
+			{
+				costItemHist.setName(costItem.getName());
+				costItem.setName(name);
+			}
+
+			if (!description.equals(costItem.getDescription()))
+			{
+				costItemHist.setDescription(costItem.getDescription());
+				costItem.setDescription(description);
+			}
+
+			if (costCategoryId != costItem.getCostCategory().getId())
+			{
+				costItemHist.setCostCategory(costItem.getCostCategory());
+				costCategory.setId(costCategoryId);
+				costItem.setCostCategory(costCategory);
+			}
+
+			if (enabled != costItem.isEnabled())
+			{
+				costItemHist.setEnabled(costItem.isEnabled());
+				costItem.setEnabled(enabled);
+			}
+
+			String actionType = "U";
+			Date actionTime = new Date();
+			//AppUser actionBy = (AppUser)request.getSession().getAttribute("appUser");
+			AppUser actionBy = appUserRepo.findOne(-1L);
+
+			costItemHist.setActionType(actionType);
+			costItemHist.setActionTime(actionTime);
+			costItemHist.setActionBy(actionBy);
+
+			costItemHistRepo.save(costItemHist);
+			costItemRepo.save(costItem);
+
+			responseObject.setSuccess(true);
+			responseObject.setResponseCode(0);
+			responseObject.setResponseString("Cost Item updated successfully.");
+			responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+			return 0;
+		}
+		catch (Exception ex)
+		{
+			responseObject.setSuccess(false);
+			responseObject.setResponseCode(-1000);
+			responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+			return -999;
+		}
+		finally
+		{
+
+		}
 	}
 
 

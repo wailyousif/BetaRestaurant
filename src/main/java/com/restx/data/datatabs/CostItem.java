@@ -40,18 +40,18 @@ public class CostItem
     private Date creationTime;
 
     @ManyToOne
-    private AppUser appUser;
+    private AppUser createdBy;
 
     public CostItem() { }
 
-    public CostItem(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser appUser) {
+    public CostItem(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser createdBy) {
         this.restaurantBranch = restaurantBranch;
         this.name = name;
         this.description = description;
         this.costCategory = costCategory;
         this.enabled = enabled;
         this.creationTime = creationTime;
-        this.appUser = appUser;
+        this.createdBy = createdBy;
     }
 
     public long getId() {
@@ -110,11 +110,11 @@ public class CostItem
         this.creationTime = creationTime;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public AppUser getCreatedBy() {
+        return createdBy;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setCreatedBy(AppUser createdBy) {
+        this.createdBy = createdBy;
     }
 }
