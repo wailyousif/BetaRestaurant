@@ -17,14 +17,12 @@ public class CostItemCost
     @SequenceGenerator(name="cost_item_cost_seq", sequenceName = "cost_item_cost_seq", allocationSize = 1, initialValue = 1)
     private long id;
 
+    //@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @ManyToOne
-    private RestaurantBranch restaurantBranch;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private CostItem costItem;
 
-    private Date fromDate;
-    private Date toDate;
+    private Date startDate;
+    private Date endDate;
 
     @ManyToOne
     private Recurrence recurrence;  //ad-hoc, daily, weekly, monthly, quarterly, bi-annual, annual
@@ -34,19 +32,18 @@ public class CostItemCost
     private Date creationTime;
 
     @ManyToOne
-    private AppUser appUser;
+    private AppUser createdBy;
 
     public CostItemCost() { }
 
-    public CostItemCost(RestaurantBranch restaurantBranch, CostItem costItem, Date fromDate, Date toDate, Recurrence recurrence, double cost, Date creationTime, AppUser appUser) {
-        this.restaurantBranch = restaurantBranch;
+    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy) {
         this.costItem = costItem;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.recurrence = recurrence;
         this.cost = cost;
         this.creationTime = creationTime;
-        this.appUser = appUser;
+        this.createdBy = createdBy;
     }
 
     public long getId() {
@@ -57,14 +54,6 @@ public class CostItemCost
         this.id = id;
     }
 
-    public RestaurantBranch getRestaurantBranch() {
-        return restaurantBranch;
-    }
-
-    public void setRestaurantBranch(RestaurantBranch restaurantBranch) {
-        this.restaurantBranch = restaurantBranch;
-    }
-
     public CostItem getCostItem() {
         return costItem;
     }
@@ -73,20 +62,20 @@ public class CostItemCost
         this.costItem = costItem;
     }
 
-    public Date getFromDate() {
-        return fromDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getToDate() {
-        return toDate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Recurrence getRecurrence() {
@@ -113,11 +102,11 @@ public class CostItemCost
         this.creationTime = creationTime;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public AppUser getCreatedBy() {
+        return createdBy;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setCreatedBy(AppUser createdBy) {
+        this.createdBy = createdBy;
     }
 }
