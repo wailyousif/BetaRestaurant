@@ -26,7 +26,7 @@ public class CostItemHist
     @ManyToOne
     private CostCategory costCategory;  //Governmental, Employees Benefits, Rental, Utilities, Others
 
-    private boolean enabled;
+    private Boolean enabled;
 
     private String actionType;
     private Date actionTime;
@@ -36,7 +36,19 @@ public class CostItemHist
 
     public CostItemHist() { }
 
-    public CostItemHist(CostItem costItem, String name, String description, CostCategory costCategory, boolean enabled, String actionType, Date actionTime, AppUser actionBy) {
+    public CostItemHist(CostItem costItem, String name, String description, CostCategory costCategory, Boolean enabled, String actionType, Date actionTime, AppUser actionBy) {
+        this.costItem = costItem;
+        this.name = name;
+        this.description = description;
+        this.costCategory = costCategory;
+        this.enabled = enabled;
+        this.actionType = actionType;
+        this.actionTime = actionTime;
+        this.actionBy = actionBy;
+    }
+
+    public CostItemHist(long id, CostItem costItem, String name, String description, CostCategory costCategory, Boolean enabled, String actionType, Date actionTime, AppUser actionBy) {
+        this.id = id;
         this.costItem = costItem;
         this.name = name;
         this.description = description;
@@ -53,6 +65,14 @@ public class CostItemHist
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public CostItem getCostItem() {
+        return costItem;
+    }
+
+    public void setCostItem(CostItem costItem) {
+        this.costItem = costItem;
     }
 
     public String getName() {
@@ -79,11 +99,11 @@ public class CostItemHist
         this.costCategory = costCategory;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -95,27 +115,19 @@ public class CostItemHist
         this.actionType = actionType;
     }
 
-    public AppUser getActionBy() {
-        return actionBy;
-    }
-
-    public void setActionBy(AppUser actionBy) {
-        this.actionBy = actionBy;
-    }
-
-    public CostItem getCostItem() {
-        return costItem;
-    }
-
-    public void setCostItem(CostItem costItem) {
-        this.costItem = costItem;
-    }
-
     public Date getActionTime() {
         return actionTime;
     }
 
     public void setActionTime(Date actionTime) {
         this.actionTime = actionTime;
+    }
+
+    public AppUser getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(AppUser actionBy) {
+        this.actionBy = actionBy;
     }
 }

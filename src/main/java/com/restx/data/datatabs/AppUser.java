@@ -34,7 +34,7 @@ public class AppUser {
     @ManyToOne
     private UserRole userRole;
 
-    private boolean enabled;
+    private Boolean enabled;
     private Date creationTime;
     //private long createdBy;
 
@@ -111,11 +111,11 @@ public class AppUser {
         this.userRole = userRole;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

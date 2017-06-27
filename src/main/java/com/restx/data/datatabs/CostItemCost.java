@@ -34,9 +34,15 @@ public class CostItemCost
     @ManyToOne
     private AppUser createdBy;
 
+    private boolean disabled;
+    private Date disabledOn;
+
+    @ManyToOne
+    private AppUser disabledBy;
+
     public CostItemCost() { }
 
-    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy) {
+    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy, boolean disabled, Date disabledOn, AppUser disabledBy) {
         this.costItem = costItem;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -44,6 +50,23 @@ public class CostItemCost
         this.cost = cost;
         this.creationTime = creationTime;
         this.createdBy = createdBy;
+        this.disabled = disabled;
+        this.disabledOn = disabledOn;
+        this.disabledBy = disabledBy;
+    }
+
+    public CostItemCost(long id, CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy, boolean disabled, Date disabledOn, AppUser disabledBy) {
+        this.id = id;
+        this.costItem = costItem;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.recurrence = recurrence;
+        this.cost = cost;
+        this.creationTime = creationTime;
+        this.createdBy = createdBy;
+        this.disabled = disabled;
+        this.disabledOn = disabledOn;
+        this.disabledBy = disabledBy;
     }
 
     public long getId() {
@@ -108,5 +131,29 @@ public class CostItemCost
 
     public void setCreatedBy(AppUser createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Date getDisabledOn() {
+        return disabledOn;
+    }
+
+    public void setDisabledOn(Date disabledOn) {
+        this.disabledOn = disabledOn;
+    }
+
+    public AppUser getDisabledBy() {
+        return disabledBy;
+    }
+
+    public void setDisabledBy(AppUser disabledBy) {
+        this.disabledBy = disabledBy;
     }
 }

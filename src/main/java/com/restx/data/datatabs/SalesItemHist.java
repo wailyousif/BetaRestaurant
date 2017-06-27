@@ -26,7 +26,7 @@ public class SalesItemHist
     private SalesItemType salesItemType;    //Sandwich, Appetizer, Dish, Desert, Drink, etc.
 
     private String description;
-    private boolean enabled;
+    private Boolean enabled;
 
     private Date creationTime;
 
@@ -92,11 +92,11 @@ public class SalesItemHist
         this.description = description;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

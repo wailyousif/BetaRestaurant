@@ -21,7 +21,7 @@ public class Supplier
     @Column(unique = true)
     private String name;
 
-    private boolean enabled;
+    private Boolean enabled;
     private Date creationTime;
 
     @ManyToOne
@@ -77,11 +77,11 @@ public class Supplier
         this.appUser = appUser;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 }

@@ -93,6 +93,12 @@ public class SpringJpaWebApplicationTests {
 
 			costItemRepo.save(costItem);
 
+			CostItemHist costItemHist = new CostItemHist(costItem, name, description, costCategory,
+					enabled, "I", new Date(), appUser);
+
+			costItemHistRepo.save(costItemHist);
+
+
 			Recurrence recurrence = new Recurrence();
 			recurrence.setId(recurrenceId);
 
@@ -102,7 +108,7 @@ public class SpringJpaWebApplicationTests {
 				endDate = Utils.arabianDf.parse(toDate);
 
 			CostItemCost costItemCost = new CostItemCost(costItem, startDate,
-					endDate, recurrence, cost, new Date(), appUser);
+					endDate, recurrence, cost, new Date(), appUser, false, null, null);
 
 			costItemCostRepo.save(costItemCost);
 
@@ -141,7 +147,6 @@ public class SpringJpaWebApplicationTests {
 
 		try
 		{
-			CostCategory costCategory = new CostCategory();
 
 			CostItemHist costItemHist = new CostItemHist();
 			CostItem costItem = costItemRepo.findOne(costItemId);
@@ -149,26 +154,27 @@ public class SpringJpaWebApplicationTests {
 
 			if (!name.equals(costItem.getName()))
 			{
-				costItemHist.setName(costItem.getName());
+				costItemHist.setName(name);
 				costItem.setName(name);
 			}
 
 			if (!description.equals(costItem.getDescription()))
 			{
-				costItemHist.setDescription(costItem.getDescription());
+				costItemHist.setDescription(description);
 				costItem.setDescription(description);
 			}
 
+			CostCategory costCategory = new CostCategory();
 			if (costCategoryId != costItem.getCostCategory().getId())
 			{
-				costItemHist.setCostCategory(costItem.getCostCategory());
 				costCategory.setId(costCategoryId);
+				costItemHist.setCostCategory(costCategory);
 				costItem.setCostCategory(costCategory);
 			}
 
-			if (enabled != costItem.isEnabled())
+			if (enabled != costItem.getEnabled())
 			{
-				costItemHist.setEnabled(costItem.isEnabled());
+				costItemHist.setEnabled(enabled);
 				costItem.setEnabled(enabled);
 			}
 
@@ -256,7 +262,7 @@ public class SpringJpaWebApplicationTests {
 			newRecurrence.setId(newRecurrenceId);
 
 			CostItemCost costItemCost = new CostItemCost(costItem, newStartDate,
-					newEndDate, newRecurrence, newCost, new Date(), createdBy);
+					newEndDate, newRecurrence, newCost, new Date(), createdBy, false, null, null);
 
 			costItemCostRepo.save(costItemCost);
 

@@ -36,7 +36,7 @@ public class CostItem
     @ManyToOne
     private CostCategory costCategory;  //Governmental, Employees Benefits, Rental, Utilities, Others
 
-    private boolean enabled;
+    private Boolean enabled;
     private Date creationTime;
 
     @ManyToOne
@@ -45,6 +45,17 @@ public class CostItem
     public CostItem() { }
 
     public CostItem(RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, boolean enabled, Date creationTime, AppUser createdBy) {
+        this.restaurantBranch = restaurantBranch;
+        this.name = name;
+        this.description = description;
+        this.costCategory = costCategory;
+        this.enabled = enabled;
+        this.creationTime = creationTime;
+        this.createdBy = createdBy;
+    }
+
+    public CostItem(long id, RestaurantBranch restaurantBranch, String name, String description, CostCategory costCategory, Boolean enabled, Date creationTime, AppUser createdBy) {
+        this.id = id;
         this.restaurantBranch = restaurantBranch;
         this.name = name;
         this.description = description;
@@ -94,11 +105,11 @@ public class CostItem
         this.costCategory = costCategory;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

@@ -67,10 +67,17 @@ public class MvcCostItemController
             CostCategory costCategory = new CostCategory();
             costCategory.setId(costCategoryId);
 
+            Date actionTime = new Date();
+
             CostItem costItem = new CostItem(restaurantBranch, name, description, costCategory,
-                    enabled, new Date(), appUser);
+                    enabled, actionTime, appUser);
 
             costItemRepo.save(costItem);
+
+            CostItemHist costItemHist = new CostItemHist(costItem, name, description, costCategory,
+                    enabled, "I", actionTime, appUser);
+
+            costItemHistRepo.save(costItemHist);
 
             Recurrence recurrence = new Recurrence();
             recurrence.setId(recurrenceId);
@@ -81,7 +88,7 @@ public class MvcCostItemController
                 endDate = Utils.arabianDf.parse(toDate);
 
             CostItemCost costItemCost = new CostItemCost(costItem, startDate,
-                    endDate, recurrence, cost, new Date(), appUser);
+                    endDate, recurrence, cost, actionTime, appUser, false, null, null);
 
             costItemCostRepo.save(costItemCost);
 
@@ -104,6 +111,7 @@ public class MvcCostItemController
 
         return responseEntity;
     }
+
 
 
     @Transactional
@@ -129,27 +137,27 @@ public class MvcCostItemController
 
             if (!name.equals(costItem.getName()))
             {
-                costItemHist.setName(costItem.getName());
+                costItemHist.setName(name);
                 costItem.setName(name);
             }
 
             if (!description.equals(costItem.getDescription()))
             {
-                costItemHist.setDescription(costItem.getDescription());
+                costItemHist.setDescription(description);
                 costItem.setDescription(description);
             }
 
             CostCategory costCategory = new CostCategory();
             if (costCategoryId != costItem.getCostCategory().getId())
             {
-                costItemHist.setCostCategory(costItem.getCostCategory());
                 costCategory.setId(costCategoryId);
+                costItemHist.setCostCategory(costCategory);
                 costItem.setCostCategory(costCategory);
             }
 
-            if (enabled != costItem.isEnabled())
+            if (enabled != costItem.getEnabled())
             {
-                costItemHist.setEnabled(costItem.isEnabled());
+                costItemHist.setEnabled(enabled);
                 costItem.setEnabled(enabled);
             }
 
@@ -184,6 +192,7 @@ public class MvcCostItemController
 
 
 
+    //Inserting new cost record
     @Transactional
     @RequestMapping(path = "/updatecostdetails", method = RequestMethod.POST)
     public ResponseEntity<ResponseObject> updateCostDetails(
@@ -237,7 +246,7 @@ public class MvcCostItemController
             newRecurrence.setId(newRecurrenceId);
 
             CostItemCost costItemCost = new CostItemCost(costItem, newStartDate,
-                    newEndDate, newRecurrence, newCost, new Date(), createdBy);
+                    newEndDate, newRecurrence, newCost, new Date(), createdBy, false, null, null);
 
             costItemCostRepo.save(costItemCost);
 
@@ -261,4 +270,48 @@ public class MvcCostItemController
         return responseEntity;
     }
 
+
+
+    @Transactional
+    @RequestMapping(path = "/disablecost", method = RequestMethod.POST)
+    public ResponseEntity<ResponseObject> disableCost(
+            HttpServletRequest request,
+            Long costItemCostId,
+            String newToDate
+    )
+    {
+        ResponseObject responseObject = new ResponseObject(false, -10,
+                "Failed to disable. Contact system administrator.");
+        ResponseEntity<ResponseObject> responseEntity;
+
+        try
+        {
+            AppUser disabledBy = (AppUser)request.getSession().getAttribute("appUser");
+
+            CostItemCost costItemCost = costItemCostRepo.findOne(costItemCostId);
+            costItemCost.setDisabled(true);
+            costItemCost.setDisabledOn(new Date());
+            costItemCost.setDisabledBy(disabledBy);
+
+            costItemCostRepo.save(costItemCost);
+
+            responseObject.setSuccess(true);
+            responseObject.setResponseCode(0);
+            responseObject.setResponseString("Disabled successfully successfully.");
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            logger.error("Handled Exception", ex);
+            responseObject.setSuccess(false);
+            responseObject.setResponseCode(-1000);
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        finally
+        {
+
+        }
+
+        return responseEntity;
+    }
 }

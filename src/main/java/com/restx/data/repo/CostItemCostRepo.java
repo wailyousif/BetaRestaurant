@@ -17,4 +17,8 @@ public interface CostItemCostRepo extends PagingAndSortingRepository<CostItemCos
 
     @Query(value = "SELECT COUNT(*) FROM Cost_Item_Cost c where c.cost_item_id = :costItemId and c.end_date >= :startDate", nativeQuery = true)
     public Integer findEndDatesAfter(@Param("costItemId") Long costItemId, @Param("startDate") Date startDate);
+
+    @Query(value = "SELECT COUNT(*) FROM Cost_Item_Cost c where c.cost_item_id = :costItemId and c.start_date <= :endDate and id != :excludedId", nativeQuery = true)
+    public Integer findStartDatesBefore(@Param("costItemId") Long costItemId, @Param("endDate") Date endDate, @Param("excludedId") Long excludedId);
+
 }

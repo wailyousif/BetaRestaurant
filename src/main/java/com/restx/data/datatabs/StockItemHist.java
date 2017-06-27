@@ -33,7 +33,7 @@ public class StockItemHist
     @ManyToOne
     private QuantificationUnit quantificationUnit;  //Quantity / Weight (Gram/KG)
 
-    private boolean enabled;
+    private Boolean enabled;
     private Date creationTime;
 
     @ManyToOne
@@ -132,11 +132,11 @@ public class StockItemHist
         this.appUser = appUser;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
