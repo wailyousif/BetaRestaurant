@@ -88,7 +88,7 @@ public class MvcCostItemController
                 endDate = Utils.arabianDf.parse(toDate);
 
             CostItemCost costItemCost = new CostItemCost(costItem, startDate,
-                    endDate, recurrence, cost, actionTime, appUser, false, null, null);
+                    endDate, recurrence, cost, actionTime, appUser);
 
             costItemCostRepo.save(costItemCost);
 
@@ -113,7 +113,7 @@ public class MvcCostItemController
     }
 
 
-
+    //update the cost item header
     @Transactional
     @RequestMapping(path = "/update", method = RequestMethod.POST)
     public ResponseEntity<ResponseObject> update(
@@ -214,13 +214,33 @@ public class MvcCostItemController
             costItem.setId(costItemId);
 
             Date newStartDate = Utils.arabianDf.parse(newFromDate);
+            Date newEndDate = null;
+            Date nonNullEndDate;
 
-            Integer conflictCount = costItemCostRepo.findEndDatesAfter(costItemId, newStartDate);
+            if (!newToDate.equals(Utils.emptyString))
+            {
+                newEndDate = Utils.arabianDf.parse(newToDate);
+                nonNullEndDate = newEndDate;
+
+                if (newEndDate.compareTo(newStartDate) < 0)
+                {
+                    responseObject.setSuccess(false);
+                    responseObject.setResponseCode(-15);
+                    responseObject.setResponseString("The End-date can't be set before the Start-date.");
+                    responseEntity = new ResponseEntity<>(responseObject, HttpStatus.CONFLICT);
+                    return  responseEntity;
+                }
+            }
+            else
+                nonNullEndDate = Utils.arabianDf.parse("31/DEC/9999");
+
+            //Integer conflictCount = costItemCostRepo.findEndDatesAfter(costItemId, newStartDate);
+            Integer conflictCount = costItemCostRepo.findConflictingDates(costItemId, newStartDate, nonNullEndDate);
             if (conflictCount > 0)
             {
                 responseObject.setSuccess(false);
                 responseObject.setResponseCode(-20);
-                responseObject.setResponseString("The end-date of one (or more) item(s) conflicts with your selected start-date");
+                responseObject.setResponseString("The new period conflicts with one (or more) existing period(s).");
                 responseEntity = new ResponseEntity<>(responseObject, HttpStatus.CONFLICT);
                 return  responseEntity;
             }
@@ -236,17 +256,13 @@ public class MvcCostItemController
                 costItemCostRepo.save(currCostItemCost);
             }
 
-            Date newEndDate = null;
-            if (!newToDate.equals(Utils.emptyString))
-                newEndDate = Utils.arabianDf.parse(newToDate);
-
             AppUser createdBy = (AppUser)request.getSession().getAttribute("appUser");
 
             Recurrence newRecurrence = new Recurrence();
             newRecurrence.setId(newRecurrenceId);
 
             CostItemCost costItemCost = new CostItemCost(costItem, newStartDate,
-                    newEndDate, newRecurrence, newCost, new Date(), createdBy, false, null, null);
+                    newEndDate, newRecurrence, newCost, new Date(), createdBy);
 
             costItemCostRepo.save(costItemCost);
 
@@ -272,12 +288,11 @@ public class MvcCostItemController
 
 
 
-    @Transactional
+
     @RequestMapping(path = "/disablecost", method = RequestMethod.POST)
     public ResponseEntity<ResponseObject> disableCost(
             HttpServletRequest request,
-            Long costItemCostId,
-            String newToDate
+            Long costItemCostId
     )
     {
         ResponseObject responseObject = new ResponseObject(false, -10,
@@ -292,12 +307,11 @@ public class MvcCostItemController
             costItemCost.setDisabled(true);
             costItemCost.setDisabledOn(new Date());
             costItemCost.setDisabledBy(disabledBy);
-
             costItemCostRepo.save(costItemCost);
 
             responseObject.setSuccess(true);
             responseObject.setResponseCode(0);
-            responseObject.setResponseString("Disabled successfully successfully.");
+            responseObject.setResponseString("Disabled successfully.");
             responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
         }
         catch (Exception ex)
@@ -314,4 +328,5 @@ public class MvcCostItemController
 
         return responseEntity;
     }
+
 }

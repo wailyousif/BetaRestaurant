@@ -50,15 +50,18 @@ public class SpringJpaWebApplicationTests {
 		TestCls testCls = new TestCls(stockTransactionType, "Test One");
 		testClsRepo.save(testCls);
 
-		int ret = add("غاز", "غاز الطبخ", 4L, true, "01/JUL/2017", "",
+		int ret = add("غاز", "غاز الطبخ", 4L, true, "01/JUL/2017", "13/JUL/2017",
 				3L, 500.0);
 		System.out.println("add=" + ret);
 
 		ret = update(1L, "غاز", "غاز الطبخ الجاهز", 4L, true);
 		System.out.println("update=" + ret);
 
-		ret = updateCostDetails(1L, "15/JUL/2017", "", 4L, 530.0);
-		System.out.println("updateDetails=" + ret);
+		ret = updateCostDetails(1L, "14/JUL/2017", "14/JUL/2017", 4L, 530.0);
+		System.out.println("updateDetails1=" + ret);
+
+		ret = updateCostDetails(1L, "15/AUG/2017", "01/SEP/2017", 4L, 530.0);
+		System.out.println("updateDetails2=" + ret);
 	}
 
 
@@ -108,7 +111,7 @@ public class SpringJpaWebApplicationTests {
 				endDate = Utils.arabianDf.parse(toDate);
 
 			CostItemCost costItemCost = new CostItemCost(costItem, startDate,
-					endDate, recurrence, cost, new Date(), appUser, false, null, null);
+					endDate, recurrence, cost, new Date(), appUser);
 
 			costItemCostRepo.save(costItemCost);
 
@@ -225,20 +228,30 @@ public class SpringJpaWebApplicationTests {
 
 		try
 		{
-			//CostItem costItem = new CostItem();
-			//costItem.setId(costItemId);
-			CostItem costItem = costItemRepo.findOne(costItemId);
+			CostItem costItem = new CostItem();
+			costItem.setId(costItemId);
 
 			Date newStartDate = Utils.arabianDf.parse(newFromDate);
+			Date newEndDate = null;
+			Date nonNullEndDate;
 
-			Integer conflictCount = costItemCostRepo.findEndDatesAfter(costItemId, newStartDate);
+			if (!newToDate.equals(Utils.emptyString))
+			{
+				newEndDate = Utils.arabianDf.parse(newToDate);
+				nonNullEndDate = newEndDate;
+			}
+			else
+				nonNullEndDate = Utils.arabianDf.parse("31/DEC/9999");
+
+			//Integer conflictCount = costItemCostRepo.findEndDatesAfter(costItemId, newStartDate);
+			Integer conflictCount = costItemCostRepo.findConflictingDates(costItemId, newStartDate, nonNullEndDate);
 			if (conflictCount > 0)
 			{
 				responseObject.setSuccess(false);
 				responseObject.setResponseCode(-20);
 				responseObject.setResponseString("The end-date of one (or more) item(s) conflicts with your selected start-date");
 				responseEntity = new ResponseEntity<>(responseObject, HttpStatus.CONFLICT);
-				return  -990;
+				return  -501;
 			}
 
 			CostItemCost currCostItemCost = costItemCostRepo.findOpenedOne(costItemId);
@@ -252,17 +265,14 @@ public class SpringJpaWebApplicationTests {
 				costItemCostRepo.save(currCostItemCost);
 			}
 
-			Date newEndDate = null;
-			if (!newToDate.equals(Utils.emptyString))
-				newEndDate = Utils.arabianDf.parse(newToDate);
-
+			//AppUser createdBy = (AppUser)request.getSession().getAttribute("appUser");
 			AppUser createdBy = appUserRepo.findOne(-1L);
 
 			Recurrence newRecurrence = new Recurrence();
 			newRecurrence.setId(newRecurrenceId);
 
 			CostItemCost costItemCost = new CostItemCost(costItem, newStartDate,
-					newEndDate, newRecurrence, newCost, new Date(), createdBy, false, null, null);
+					newEndDate, newRecurrence, newCost, new Date(), createdBy);
 
 			costItemCostRepo.save(costItemCost);
 

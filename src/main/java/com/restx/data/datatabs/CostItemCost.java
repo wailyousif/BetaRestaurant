@@ -42,7 +42,7 @@ public class CostItemCost
 
     public CostItemCost() { }
 
-    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy, boolean disabled, Date disabledOn, AppUser disabledBy) {
+    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy) {
         this.costItem = costItem;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -50,13 +50,13 @@ public class CostItemCost
         this.cost = cost;
         this.creationTime = creationTime;
         this.createdBy = createdBy;
-        this.disabled = disabled;
-        this.disabledOn = disabledOn;
-        this.disabledBy = disabledBy;
+
+        this.disabled = false;
+        this.disabledOn = null;
+        this.disabledBy = null;
     }
 
-    public CostItemCost(long id, CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy, boolean disabled, Date disabledOn, AppUser disabledBy) {
-        this.id = id;
+    public CostItemCost(CostItem costItem, Date startDate, Date endDate, Recurrence recurrence, double cost, Date creationTime, AppUser createdBy, boolean disabled, Date disabledOn, AppUser disabledBy) {
         this.costItem = costItem;
         this.startDate = startDate;
         this.endDate = endDate;
