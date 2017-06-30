@@ -1,5 +1,6 @@
 package com.restx.controller.mvc;
 
+import com.google.gson.Gson;
 import com.restx.data.codestabs.CostCategory;
 import com.restx.data.codestabs.Recurrence;
 import com.restx.data.datatabs.*;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wailm.yousif on 6/24/17.
@@ -39,6 +41,95 @@ public class MvcCostItemController
 
     @Autowired
     private CostItemHistRepo costItemHistRepo;
+
+
+
+    @RequestMapping(path = "/getcostitems", method = RequestMethod.POST)
+    public ResponseEntity<ResponseObject> getCostItems()
+    {
+        ResponseObject responseObject = new ResponseObject(false, -10,
+                "Could not fetch Cost Items. Contact system administrator.");
+        ResponseEntity<ResponseObject> responseEntity;
+
+        try
+        {
+            //List<CostItem> costItems = costItemRepo.findAllSortedById();
+
+            List<Object[]> listOfObjectsArray = costItemRepo.findAllWithCurrentCost();
+            String[] keys = {"id", "name", "description", "creationTime", "enabled", "langCode", "displayName", "cost"};
+            String jsonArr = "[";
+            for (int k=0; k < listOfObjectsArray.size(); k++)
+            {
+                Object[] objectsArray = listOfObjectsArray.get(k);
+                String jsonObj = "{";
+                for (int i=0; i < objectsArray.length; i++)
+                {
+                    jsonObj += "\"" + keys[i] + "\":\"" + objectsArray[i] + "\"";
+                    if (i < objectsArray.length-1)
+                        jsonObj += ", ";
+                }
+                jsonObj += "}";
+                if (k < listOfObjectsArray.size()-1)
+                    jsonObj += ", ";
+                jsonArr += jsonObj;
+            }
+            jsonArr += "]";
+
+            responseObject.setSuccess(true);
+            responseObject.setResponseCode(0);
+            responseObject.setResponseString(jsonArr);
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            logger.error("Handled Exception", ex);
+            responseObject.setSuccess(false);
+            responseObject.setResponseCode(-1000);
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        finally
+        {
+
+        }
+
+        return responseEntity;
+    }
+
+
+
+    @RequestMapping(path = "/getcostitemdetails", method = RequestMethod.POST)
+    public ResponseEntity<ResponseObject> getCostItemDetails(Long costItemId)
+    {
+        ResponseObject responseObject = new ResponseObject(false, -10,
+                "Could not fetch the cost details. Contact system administrator.");
+        ResponseEntity<ResponseObject> responseEntity;
+
+        try
+        {
+            //List<CostItem> costItems = costItemRepo.findAllSortedById();
+            List<Object[]> costItemCosts = costItemCostRepo.findByCostItemOrdered2(costItemId);
+
+            responseObject.setSuccess(true);
+            responseObject.setResponseCode(0);
+            responseObject.setResponseString(new Gson().toJson(costItemCosts));
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            logger.error("Handled Exception", ex);
+            responseObject.setSuccess(false);
+            responseObject.setResponseCode(-1000);
+            responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        finally
+        {
+
+        }
+
+        return responseEntity;
+    }
+
+
 
     @Transactional
     @RequestMapping(path = "/add", method = RequestMethod.POST)

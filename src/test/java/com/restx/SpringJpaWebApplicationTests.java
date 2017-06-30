@@ -1,5 +1,8 @@
 package com.restx;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.restx.data.codestabs.CostCategory;
 import com.restx.data.codestabs.Recurrence;
 import com.restx.data.codestabs.StockTransactionType;
@@ -7,6 +10,7 @@ import com.restx.data.datatabs.*;
 import com.restx.data.repo.*;
 import com.restx.dto.ResponseObject;
 import com.restx.services.Utils;
+import com.sun.corba.se.impl.logging.UtilSystemException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RunWith(SpringRunner.class)
@@ -43,25 +48,97 @@ public class SpringJpaWebApplicationTests {
 	private AppUserRepo appUserRepo;
 
 	@Test
-	public void walkThroughTest()
-	{
+	public void walkThroughTest() throws JsonProcessingException {
 		StockTransactionType stockTransactionType = new StockTransactionType();
 		stockTransactionType.setId(1);
 		TestCls testCls = new TestCls(stockTransactionType, "Test One");
 		testClsRepo.save(testCls);
 
-		int ret = add("غاز", "غاز الطبخ", 4L, true, "01/JUL/2017", "13/JUL/2017",
+		int ret = add("غاز", "غاز الطبخ", 4L, true, "01/JUN/2017", "29/JUN/2017",
 				3L, 500.0);
 		System.out.println("add=" + ret);
 
 		ret = update(1L, "غاز", "غاز الطبخ الجاهز", 4L, true);
 		System.out.println("update=" + ret);
 
-		ret = updateCostDetails(1L, "14/JUL/2017", "14/JUL/2017", 4L, 530.0);
+		ret = updateCostDetails(1L, "30/JUN/2017", "14/JUL/2017", 4L, 530.0);
 		System.out.println("updateDetails1=" + ret);
 
-		ret = updateCostDetails(1L, "15/AUG/2017", "01/SEP/2017", 4L, 530.0);
+		ret = updateCostDetails(1L, "15/AUG/2017", "01/SEP/2017", 4L, 540.0);
 		System.out.println("updateDetails2=" + ret);
+
+		ResponseObject respObj = getHeaders();
+		System.out.println("getHeaders=" + respObj.getResponseString());
+
+
+		List<Object[]> listOfObjectsArray = costItemRepo.findAllWithCurrentCost();
+		String[] keys = {"id", "name", "description", "creationTime", "enabled", "langCode", "displayName", "cost"};
+		String jsonArr = "[";
+		//for (Object[] objectsArray: listOfObjectsArray)
+		for (int k=0; k < listOfObjectsArray.size(); k++)
+		{
+			Object[] objectsArray = listOfObjectsArray.get(k);
+			String jsonObj = "{";
+			for (int i=0; i < objectsArray.length; i++)
+			{
+				jsonObj += "\"" + keys[i] + "\":\"" + objectsArray[i] + "\"";
+				if (i < objectsArray.length-1)
+					jsonObj += ", ";
+			}
+			jsonObj += "}";
+			if (k < listOfObjectsArray.size()-1)
+				jsonObj += ", ";
+			jsonArr += jsonObj;
+			/*
+			String ss = Utils.emptyString;
+			for (Object obj: objectsArray)
+			{
+				System.out.println(obj);
+				ss = ss + String.valueOf(obj) + ", ";
+			}
+			System.out.println("ss=" + ss);
+			*/
+		}
+		jsonArr += "]";
+		//String json = (new Gson()).toJson(listOfObjectsArray);
+		//System.out.println("json=" + json);
+		System.out.println("jsonArr=" + jsonArr);
+
+
+		List<CostItemCost> costItemCosts = costItemCostRepo.findByCostItemOrdered(1L);
+		ObjectMapper mapper = new ObjectMapper();
+		String detJson = mapper.writeValueAsString(costItemCosts);
+		System.out.println("detJson=" + detJson);
+	}
+
+
+	public ResponseObject getHeaders()
+	{
+		ResponseObject responseObject = new ResponseObject(false, -10,
+				"Could not fetch Cost Items. Contact system administrator.");
+		ResponseEntity<ResponseObject> responseEntity;
+
+		try
+		{
+			List<CostItem> costItems = costItemRepo.findAllSortedById();
+
+			responseObject.setSuccess(true);
+			responseObject.setResponseCode(0);
+			responseObject.setResponseString((new Gson()).toJson(costItems));
+			responseEntity = new ResponseEntity<>(responseObject, HttpStatus.OK);
+		}
+		catch (Exception ex)
+		{
+			responseObject.setSuccess(false);
+			responseObject.setResponseCode(-1000);
+			responseObject.setResponseString(ex.getMessage());
+			responseEntity = new ResponseEntity<>(responseObject, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		finally
+		{
+
+		}
+		return responseObject;
 	}
 
 
